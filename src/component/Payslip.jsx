@@ -15,8 +15,8 @@ const Payslip = () => {
   };
 
   const [data, setData] = useState({
-    month: "DEC 2024",
-    employeeName: "JAYDEEP VAGH",
+    month: "Month",
+    employeeName: "Name Of the Employee",
     employeeNumber: "KNV00255",
     dateJoined: "23 Dec 2024",
     department: "Engineering",
@@ -403,7 +403,7 @@ const Payslip = () => {
                 </td>
               </tr>
               {/* Row 6 */}
-              <tr>
+              {/* <tr>
                 <td className="border border-gray-300 px-4 py-2 font-semibold bg-gray-50">UAN</td>
                 <td className="border border-gray-300 px-4 py-2">
                   {isEditing ? (
@@ -430,9 +430,9 @@ const Payslip = () => {
                     data.pfNumber
                   )}
                 </td>
-              </tr>
+              </tr> */}
               {/* Row 7 */}
-              <tr>
+              {/* <tr>
                 <td className="border border-gray-300 px-4 py-2 font-semibold bg-gray-50">TAN Number</td>
                 <td className="border border-gray-300 px-4 py-2">
                   {isEditing ? (
@@ -459,7 +459,7 @@ const Payslip = () => {
                     data.panNumber
                   )}
                 </td>
-              </tr>
+              </tr> */}
             </tbody>
           </table>
 
@@ -550,7 +550,7 @@ const Payslip = () => {
                       )}
                     </span>
                   </div>
-                  <div className="flex justify-between mb-3">
+                  {/* <div className="flex justify-between mb-3">
                     <span>House Rent Allowance (HRA)</span>
                     <span className="font-semibold">
                       {isEditing ? (
@@ -564,7 +564,7 @@ const Payslip = () => {
                         `₹${data.earnings.hra}`
                       )}
                     </span>
-                  </div>
+                  </div> */}
                   <div className="flex justify-between mb-3">
                     <span>Dearness Allowance</span>
                     <span className="font-semibold">
@@ -606,34 +606,7 @@ const Payslip = () => {
 
               {/* Deductions Column */}
               <div className="flex-1">
-                <div className="border-b border-gray-300">
-                  <div className="text-center py-2 font-bold bg-gray-50">
-                    Labour Welfare Fund (LWF)
-                  </div>
-                  <div className="p-4">
-                    <div className="flex justify-between mb-3">
-                      <span>Labour Welfare Fund (LWF)</span>
-                      <span className="font-semibold">
-                        {isEditing ? (
-                          <input
-                            type="text"
-                            value={data.deductions.lwf}
-                            onChange={(e) => handleChange("deductions.lwf", e.target.value)}
-                            className="w-32 px-2 py-1 border border-gray-300 rounded text-right"
-                          />
-                        ) : (
-                          `₹${data.deductions.lwf}`
-                        )}
-                      </span>
-                    </div>
-                    <div className="border-t border-gray-300 mt-4 pt-3">
-                      <div className="flex justify-between font-bold">
-                        <span>Total Contributions (B)</span>
-                        <span>₹{formatCurrency(totalContributions())}</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                
                 <div className="border-t border-gray-300">
                   <div className="text-center py-2 font-bold bg-gray-50">
                     TAXES & DEDUCTIONS
@@ -656,7 +629,7 @@ const Payslip = () => {
                     </div>
                     <div className="border-t border-gray-300 mt-4 pt-3">
                       <div className="flex justify-between font-bold">
-                        <span>Total Taxes & Deductions (C)</span>
+                        <span>Total Taxes & Deductions (B)</span>
                         <span>₹{formatCurrency(totalTaxesDeductions())}</span>
                       </div>
                     </div>
@@ -670,7 +643,7 @@ const Payslip = () => {
           <div className="mt-8 p-4 border border-gray-300">
             <div className="text-center mb-2">
               <p className="text-lg font-bold">
-                Net Salary Payable (A - B - C): ₹{formatCurrency(netSalary())}
+                Net Salary Payable (A - B): ₹{formatCurrency(netSalary())}
               </p>
             </div>
             <div className="text-center">
