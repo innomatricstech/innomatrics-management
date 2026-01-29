@@ -20,9 +20,9 @@ const [data, setData] = useState({
   employeeNumber: "",
   dateJoined: "",
   department: "",
-  subDepartment: "",
+
   designation: "",
-  secondaryJobTitle: "",
+
   paymentMode: "",
   bankName: "",
   ifsc: "",
@@ -42,7 +42,8 @@ const [data, setData] = useState({
 
   deductions: {
     lwf: "",
-    professionalTax: ""
+    professionalTax: "",
+    lossOfPayAmount: ""
   }
 });
 
@@ -66,17 +67,27 @@ const [data, setData] = useState({
     return parseFloat(str.replace(/,/g, '')) || 0;
   };
 
-  const totalEarnings = () => {
-    return Object.values(data.earnings).reduce((sum, val) => sum + parseNumber(val), 0);
-  };
+const totalEarnings = () => {
+  return (
+    parseNumber(data.earnings.basic) +
+    parseNumber(data.earnings.da) +
+    parseNumber(data.earnings.ta)
+  );
+};
+
 
   const totalContributions = () => {
     return parseNumber(data.deductions.lwf);
   };
 
-  const totalTaxesDeductions = () => {
-    return parseNumber(data.deductions.professionalTax);
-  };
+const totalTaxesDeductions = () => {
+  return (
+    parseNumber(data.deductions.professionalTax) +
+    lossOfPayAmount()
+  );
+};
+
+
 
   const netSalary = () => {
     return totalEarnings() - totalContributions() - totalTaxesDeductions();
@@ -89,6 +100,7 @@ const [data, setData] = useState({
     });
   };
 
+  
   const numberToWords = (num) => {
     if (!num || num === 0) return 'Zero';
     
@@ -153,6 +165,17 @@ const [data, setData] = useState({
       alert('Error downloading payslip. Please try again.');
     }
   };
+
+  const ACTUAL_PAYABLE_DAYS = 22;
+
+const perDaySalary = () => {
+  return parseNumber(data.earnings.basic) / ACTUAL_PAYABLE_DAYS;
+};
+
+const lossOfPayAmount = () => {
+  return perDaySalary() * parseNumber(data.lossOfPayDays);
+};
+
 
   return (
     <div className="min-h-screen bg-gray-50 p-4 md:p-6">
@@ -287,65 +310,46 @@ const [data, setData] = useState({
                 </td>
               </tr>
               {/* Row 2 */}
-              <tr>
-                <td className="border border-gray-300 px-4 py-2 font-semibold bg-gray-50">Department</td>
-                <td className="border border-gray-300 px-4 py-2">
-                  {isEditing ? (
-                    <input
-                      type="text"
-                      value={data.department}
-                      onChange={(e) => handleChange("department", e.target.value)}
-                      className="w-full px-2 py-1 border border-gray-300 rounded"
-                    />
-                  ) : (
-                    data.department
-                  )}
-                </td>
-                <td className="border border-gray-300 px-4 py-2 font-semibold bg-gray-50">Sub-Department</td>
-                <td className="border border-gray-300 px-4 py-2">
-                  {isEditing ? (
-                    <input
-                      type="text"
-                      value={data.subDepartment}
-                      onChange={(e) => handleChange("subDepartment", e.target.value)}
-                      className="w-full px-2 py-1 border border-gray-300 rounded"
-                    />
-                  ) : (
-                    data.subDepartment
-                  )}
-                </td>
-              </tr>
-              {/* Row 3 */}
-              <tr>
-                <td className="border border-gray-300 px-4 py-2 font-semibold bg-gray-50">Designation</td>
-                <td className="border border-gray-300 px-4 py-2">
-                  {isEditing ? (
-                    <input
-                      type="text"
-                      value={data.designation}
-                      onChange={(e) => handleChange("designation", e.target.value)}
-                      className="w-full px-2 py-1 border border-gray-300 rounded"
-                    />
-                  ) : (
-                    data.designation
-                  )}
-                </td>
-                <td className="border border-gray-300 px-4 py-2 font-semibold bg-gray-50">Secondary Job Title</td>
-                <td className="border border-gray-300 px-4 py-2">
-                  {isEditing ? (
-                    <input
-                      type="text"
-                      value={data.secondaryJobTitle}
-                      onChange={(e) => handleChange("secondaryJobTitle", e.target.value)}
-                      className="w-full px-2 py-1 border border-gray-300 rounded"
-                    />
-                  ) : (
-                    data.secondaryJobTitle
-                  )}
-                </td>
-              </tr>
-              {/* Row 4 */}
-              <tr>
+             
+               
+             <tr>
+  {/* Department */}
+  <td className="border border-gray-300 px-4 py-2 font-semibold bg-gray-50">
+    Department
+  </td>
+  <td className="border border-gray-300 px-4 py-2">
+    {isEditing ? (
+      <input
+        type="text"
+        value={data.department}
+        onChange={(e) => handleChange("department", e.target.value)}
+        className="w-full px-2 py-1 border border-gray-300 rounded"
+      />
+    ) : (
+      data.department
+    )}
+  </td>
+
+  {/* Designation */}
+  <td className="border border-gray-300 px-4 py-2 font-semibold bg-gray-50">
+    Designation
+  </td>
+  <td className="border border-gray-300 px-4 py-2">
+    {isEditing ? (
+      <input
+        type="text"
+        value={data.designation}
+        onChange={(e) => handleChange("designation", e.target.value)}
+        className="w-full px-2 py-1 border border-gray-300 rounded"
+      />
+    ) : (
+      data.designation
+    )}
+  </td>
+</tr>
+
+          
+               <tr>
                 <td className="border border-gray-300 px-4 py-2 font-semibold bg-gray-50">Payment Mode</td>
                 <td className="border border-gray-300 px-4 py-2">
                   {isEditing ? (
@@ -495,8 +499,8 @@ const [data, setData] = useState({
                       data.totalWorkingDays
                     )}
                   </td>
-                  <td className="border border-gray-300 px-4 py-2 font-semibold bg-gray-50">Loss Of Pay Days</td>
-                  <td className="border border-gray-300 px-4 py-2">
+                  <td className="border border-gray-300 px-4 py-2 font-semibold bg-gray-50 mt-2">Loss Of Pay Days</td>
+                  <td className="border border-gray-300 px-4 py-2 ">
                     {isEditing ? (
                       <input
                         type="text"
@@ -551,6 +555,7 @@ const [data, setData] = useState({
                 `₹${data.earnings.basic}`
               )}
             </span>
+            
           </div>
 
           <div className="grid grid-cols-2">
@@ -616,6 +621,13 @@ const [data, setData] = useState({
             )}
           </span>
         </div>
+        <div className="grid grid-cols-2">
+  <span className="text-gray-700">Loss Of Pay</span>
+  <span className="font-semibold text-right">
+    ₹{formatCurrency(lossOfPayAmount())}
+  </span>
+</div>
+
       </div>
       {/* Total Deductions Row - Perfectly Aligned */}
       <div className="border-t border-gray-300 p-4 bg-gray-50/50">
