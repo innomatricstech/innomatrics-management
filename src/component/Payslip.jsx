@@ -13,40 +13,39 @@ const Payslip = () => {
     address: "2nd Floor, Akshay Complex, No. 01,16th Main Rd, near Bharat Petroleum, BTM 2nd Stage, Bengaluru, Karnataka 560076",
     logo: Logo// Placeholder logo
   };
+const [data, setData] = useState({
+  month: "",
+  year: "",
+  employeeName: "Employee Name ",
+  employeeNumber: "",
+  dateJoined: "",
+  department: "",
+  subDepartment: "",
+  designation: "",
+  secondaryJobTitle: "",
+  paymentMode: "",
+  bankName: "",
+  ifsc: "",
+  accountNo: "",
 
-  const [data, setData] = useState({
-    month: "Month",
-    employeeName: "Name Of the Employee",
-    employeeNumber: "KNV00255",
-    dateJoined: "23 Dec 2024",
-    department: "Engineering",
-    subDepartment: "N/A",
-    designation: "Jr SDE",
-    secondaryJobTitle: "Mobile",
-    paymentMode: "Bank Transfer",
-    bankName: "ICICI Bank Limited",
-    ifsc: "ICIC0000584",
-    accountNo: "058401543400",
-    uan: "N/A",
-    pfNumber: "N/A",
-    tanNumber: "SRTK07525A",
-    panNumber: "CBTPV8574N",
-    payableDays: "22.0",
-    totalWorkingDays: "7.0",
-    lossOfPayDays: "0.0",
-    daysPayable: "7",
-   earnings: {
-  basic: "",
-  hra: "",
-  da: "",
-  ta: ""
-},
-deductions: {
-  lwf: "",
-  professionalTax: ""
-}
+  payableDays: "",
+  totalWorkingDays: "",
+  lossOfPayDays: "",
+  daysPayable: "",
 
-  });
+  earnings: {
+    basic: "",
+    hra: "",
+    da: "",
+    ta: ""
+  },
+
+  deductions: {
+    lwf: "",
+    professionalTax: ""
+  }
+});
+
 
   const handleChange = (path, value) => {
     setData((prev) => {
