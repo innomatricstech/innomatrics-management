@@ -526,124 +526,113 @@ const Payslip = () => {
             </table>
           </div>
 
-          {/* Earnings & Deductions Section */}
-          <div className="mt-8">
-            <div className="flex border border-gray-300">
-              {/* Earnings Column */}
-              <div className="flex-1 border-r border-gray-300">
-                <div className="text-center py-2 font-bold border-b border-gray-300 bg-gray-50">
-                  EARNINGS
-                </div>
-                <div className="p-4">
-                  <div className="flex justify-between mb-3">
-                    <span>Basic</span>
-                    <span className="font-semibold">
-                      {isEditing ? (
-                        <input
-                          type="text"
-                          value={data.earnings.basic}
-                          onChange={(e) => handleChange("earnings.basic", e.target.value)}
-                          className="w-32 px-2 py-1 border border-gray-300 rounded text-right"
-                        />
-                      ) : (
-                        `₹${data.earnings.basic}`
-                      )}
-                    </span>
-                  </div>
-                  {/* <div className="flex justify-between mb-3">
-                    <span>House Rent Allowance (HRA)</span>
-                    <span className="font-semibold">
-                      {isEditing ? (
-                        <input
-                          type="text"
-                          value={data.earnings.hra}
-                          onChange={(e) => handleChange("earnings.hra", e.target.value)}
-                          className="w-32 px-2 py-1 border border-gray-300 rounded text-right"
-                        />
-                      ) : (
-                        `₹${data.earnings.hra}`
-                      )}
-                    </span>
-                  </div> */}
-                  <div className="flex justify-between mb-3">
-                    <span>Dearness Allowance</span>
-                    <span className="font-semibold">
-                      {isEditing ? (
-                        <input
-                          type="text"
-                          value={data.earnings.da}
-                          onChange={(e) => handleChange("earnings.da", e.target.value)}
-                          className="w-32 px-2 py-1 border border-gray-300 rounded text-right"
-                        />
-                      ) : (
-                        `₹${data.earnings.da}`
-                      )}
-                    </span>
-                  </div>
-                  <div className="flex justify-between mb-3">
-                    <span>Travelling Allowance</span>
-                    <span className="font-semibold">
-                      {isEditing ? (
-                        <input
-                          type="text"
-                          value={data.earnings.ta}
-                          onChange={(e) => handleChange("earnings.ta", e.target.value)}
-                          className="w-32 px-2 py-1 border border-gray-300 rounded text-right"
-                        />
-                      ) : (
-                        `₹${data.earnings.ta}`
-                      )}
-                    </span>
-                  </div>
-                  <div className="border-t border-gray-300 mt-4 pt-3">
-                    <div className="flex justify-between font-bold">
-                      <span>Total Earnings (A)</span>
-                      <span>₹{formatCurrency(totalEarnings())}</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Deductions Column */}
-              <div className="flex-1">
-                
-                <div className="border-t border-gray-300">
-                  <div className="text-center py-2 font-bold bg-gray-50">
-                    TAXES & DEDUCTIONS
-                  </div>
-                  <div className="p-4">
-                    <div className="flex justify-between mb-3">
-                      <span>Professional Tax</span>
-                      <span className="font-semibold">
-                        {isEditing ? (
-                          <input
-                            type="text"
-                            value={data.deductions.professionalTax}
-                            onChange={(e) => handleChange("deductions.professionalTax", e.target.value)}
-                            className="w-32 px-2 py-1 border border-gray-300 rounded text-right"
-                          />
-                        ) : (
-                          `₹${data.deductions.professionalTax}`
-                        )}
-                      </span>
-                    </div>
-                    <div className="border-t border-gray-300 mt-4 pt-3">
-                      <div className="flex justify-between font-bold">
-                        <span>Total Taxes & Deductions (B)</span>
-                        <span>₹{formatCurrency(totalTaxesDeductions())}</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+         {/* Earnings & Deductions Section */}
+<div className="mt-8">
+  <div className="flex border border-gray-300">
+    {/* Earnings Column */}
+    <div className="flex-1 border-r border-gray-300 flex flex-col">
+      <div className="text-center py-2 font-bold border-b border-gray-300 bg-gray-50 uppercase tracking-wider">
+        Earnings
+      </div>
+      <div className="p-4 flex-grow">
+        {/* Itemized List */}
+        <div className="space-y-3">
+          <div className="grid grid-cols-2">
+            <span className="text-gray-700">Basic</span>
+            <span className="font-semibold text-right">
+              {isEditing ? (
+                <input
+                  type="text"
+                  value={data.earnings.basic}
+                  onChange={(e) => handleChange("earnings.basic", e.target.value)}
+                  className="w-32 px-2 py-1 border border-gray-300 rounded text-right"
+                />
+              ) : (
+                `₹${data.earnings.basic}`
+              )}
+            </span>
           </div>
+
+          <div className="grid grid-cols-2">
+            <span className="text-gray-700">Dearness Allowance</span>
+            <span className="font-semibold text-right">
+              {isEditing ? (
+                <input
+                  type="text"
+                  value={data.earnings.da}
+                  onChange={(e) => handleChange("earnings.da", e.target.value)}
+                  className="w-32 px-2 py-1 border border-gray-300 rounded text-right"
+                />
+              ) : (
+                `₹${data.earnings.da}`
+              )}
+            </span>
+          </div>
+
+          <div className="grid grid-cols-2">
+            <span className="text-gray-700">Travelling Allowance</span>
+            <span className="font-semibold text-right">
+              {isEditing ? (
+                <input
+                  type="text"
+                  value={data.earnings.ta}
+                  onChange={(e) => handleChange("earnings.ta", e.target.value)}
+                  className="w-32 px-2 py-1 border border-gray-300 rounded text-right"
+                />
+              ) : (
+                `₹${data.earnings.ta}`
+              )}
+            </span>
+          </div>
+        </div>
+      </div>
+      {/* Total Earnings Row - Perfectly Aligned */}
+      <div className="border-t border-gray-300 p-4 bg-gray-50/50">
+        <div className="grid grid-cols-2 font-bold">
+          <span>Total Earnings</span>
+          <span className="text-right">₹{formatCurrency(totalEarnings())}</span>
+        </div>
+      </div>
+    </div>
+
+    {/* Deductions Column */}
+    <div className="flex-1 flex flex-col">
+      <div className="text-center py-2 font-bold border-b border-gray-300 bg-gray-50 uppercase tracking-wider">
+        Taxes & Deductions
+      </div>
+      <div className="p-4 flex-grow">
+        <div className="grid grid-cols-2">
+          <span className="text-gray-700">Professional Tax</span>
+          <span className="font-semibold text-right">
+            {isEditing ? (
+              <input
+                type="text"
+                value={data.deductions.professionalTax}
+                onChange={(e) => handleChange("deductions.professionalTax", e.target.value)}
+                className="w-32 px-2 py-1 border border-gray-300 rounded text-right"
+              />
+            ) : (
+              `₹${data.deductions.professionalTax}`
+            )}
+          </span>
+        </div>
+      </div>
+      {/* Total Deductions Row - Perfectly Aligned */}
+      <div className="border-t border-gray-300 p-4 bg-gray-50/50">
+        <div className="grid grid-cols-2 font-bold">
+          <span>Total Taxes & Deductions</span>
+          <span className="text-right">₹{formatCurrency(totalTaxesDeductions())}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
           {/* Net Salary Section */}
           <div className="mt-8 p-4 border border-gray-300">
             <div className="text-center mb-2">
               <p className="text-lg font-bold">
-                Net Salary Payable (A - B): ₹{formatCurrency(netSalary())}
+               Net Salary Payable (Total Earnings - Deductions) : ₹{formatCurrency(netSalary())}
               </p>
             </div>
             <div className="text-center">
