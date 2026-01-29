@@ -35,16 +35,17 @@ const Payslip = () => {
     totalWorkingDays: "7.0",
     lossOfPayDays: "0.0",
     daysPayable: "7",
-    earnings: {
-      basic: "3,466.59",
-      hra: "1,756.36",
-      da: "3,466.59",
-      ta: "219.55"
-    },
-    deductions: {
-      lwf: "6.00",
-      professionalTax: "0.00"
-    }
+   earnings: {
+  basic: "",
+  hra: "",
+  da: "",
+  ta: ""
+},
+deductions: {
+  lwf: "",
+  professionalTax: ""
+}
+
   });
 
   const handleChange = (path, value) => {
