@@ -3,12 +3,16 @@ import { useNavigate } from "react-router-dom";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../firebase";
 import logo from "../../assets/innomatric_logo_only.png";
+import { Eye, EyeOff } from "lucide-react";
+
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -77,18 +81,33 @@ function Login() {
                 className="w-full p-3 rounded-lg bg-white/20 border border-white/30 placeholder-gray-300 text-white focus:ring-2 focus:ring-pink-400 focus:outline-none"
               />
             </div>
+<div>
+  <label className="block text-sm mb-1 text-gray-200">Password</label>
 
-            <div>
-              <label className="block text-sm mb-1 text-gray-200">Password</label>
-              <input
-                type="password"
-                placeholder="••••••••"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-                className="w-full p-3 rounded-lg bg-white/20 border border-white/30 placeholder-gray-300 text-white focus:ring-2 focus:ring-pink-400 focus:outline-none"
-              />
-            </div>
+  <div className="relative">
+    <input
+      type={showPassword ? "text" : "password"}
+      placeholder="••••••••"
+      value={password}
+      onChange={(e) => setPassword(e.target.value)}
+      required
+      className="w-full p-3 pr-12 rounded-lg bg-white/20 border border-white/30 
+                 placeholder-gray-300 text-white focus:ring-2 
+                 focus:ring-pink-400 focus:outline-none"
+    />
+
+    {/* Eye Icon */}
+    <button
+      type="button"
+      onClick={() => setShowPassword(!showPassword)}
+      className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-300 
+                 hover:text-white transition"
+    >
+      {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+    </button>
+  </div>
+</div>
+
 
             <button
               type="submit"
