@@ -18,6 +18,7 @@ import DailyReportPage from "./component/pages/DailyReportPage";
 import LeaveCalenderPage from "./component/pages/LeaveCalenderPage";
 import ChatPage from "./component/pages/ChatPage";
 import Payslip from "./component/Payslip";
+import AdminAnalytics from "./component/pages/AdminAnalytics"
 
 function AppLayout() {
   const location = useLocation();
@@ -106,12 +107,20 @@ function AppLayout() {
                 </ProtectedRoute>
               }
             />
-
-            <Route
+<Route
               path="/payslip"
               element={
                 <ProtectedRoute>
                   <Payslip />
+                </ProtectedRoute>
+              }
+            />
+            
+            <Route
+              path="/analytics"
+              element={
+                <ProtectedRoute>
+                  <AdminAnalytics />
                 </ProtectedRoute>
               }
             />

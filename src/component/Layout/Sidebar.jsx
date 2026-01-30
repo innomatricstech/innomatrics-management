@@ -20,11 +20,11 @@ const Sidebar = () => {
     { name: 'Reports', path: '/reports', icon: '📊' },
     { name: 'Team', path: '/team', icon: '👥' },
     { name: 'Calendar', path: '/calendar', icon: '📅' },
-    { name: 'Messages', path: '/messages', icon: '💬' },
+    // { name: 'Messages', path: '/messages', icon: '💬' },
     { name: 'Analytics', path: '/analytics', icon: '📈' },
-    { name: 'Settings', path: '/settings', icon: '⚙️' },
+    // { name: 'Settings', path: '/settings', icon: '⚙️' },
     { name: 'Payslip', path: '/payslip', icon: '🧰' },
-    { name: 'Profile', path: '/profile', icon: '🙍‍♂️' },
+    // { name: 'Profile', path: '/profile', icon: '🙍‍♂️' },
   ];
 
   const handleLogout = async () => {
