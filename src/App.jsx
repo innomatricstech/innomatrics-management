@@ -19,6 +19,7 @@ import LeaveCalenderPage from "./component/pages/LeaveCalenderPage";
 import ChatPage from "./component/pages/ChatPage";
 import Payslip from "./component/Payslip";
 import AdminAnalytics from "./component/pages/AdminAnalytics"
+import AdminRequests from "./component/pages/AdminRequests";
 
 function AppLayout() {
   const location = useLocation();
@@ -121,6 +122,15 @@ function AppLayout() {
               element={
                 <ProtectedRoute>
                   <AdminAnalytics />
+                </ProtectedRoute>
+              }
+            />
+
+            <Route
+              path="/request"
+              element={
+                <ProtectedRoute>
+                  <AdminRequests />
                 </ProtectedRoute>
               }
             />

@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../../firebase";
+import { collection, query, where, getDocs } from "firebase/firestore";
+import { auth, db } from "../../firebase";
 import logo from "../../assets/innomatric_logo_only.png";
 import { Eye, EyeOff } from "lucide-react";
+
 
 
 function Login() {
@@ -15,24 +17,63 @@ function Login() {
 
   const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setError("");
-    setLoading(true);
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  setError("");
+  setLoading(true);
 
-    try {
-      await signInWithEmailAndPassword(auth, email, password);
-      navigate("/dashboard");
-    } catch (err) {
-      if (err.code === "auth/invalid-credential") {
-        setError("Invalid email or password.");
-      } else {
-        setError(err.message);
-      }
-    } finally {
-      setLoading(false);
+  try {
+    // 1️⃣ Firebase Auth Login
+    const userCredential = await signInWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+
+    const loggedInEmail = userCredential.user.email;
+
+    // 2️⃣ Fetch user from Firestore (team collection)
+    const q = query(
+      collection(db, "team"),
+      where("loginEmail", "==", loggedInEmail)
+    );
+
+    const snapshot = await getDocs(q);
+
+    if (snapshot.empty) {
+      throw new Error("User record not found in database");
     }
-  };
+
+    // 3️⃣ Get user data
+    const userDoc = snapshot.docs[0];
+    const userData = {
+      id: userDoc.id,
+      ...userDoc.data()
+    };
+
+    // 4️⃣ Save user data in localStorage
+    localStorage.setItem("user", JSON.stringify(userData));
+
+    // 5️⃣ Redirect based on role
+    if (userData.role === "admin") {
+      navigate("/dashboard");
+    } else {
+      navigate("/dashboard");
+    }
+
+  } catch (err) {
+    console.error(err);
+
+    if (err.code === "auth/invalid-credential") {
+      setError("Invalid email or password.");
+    } else {
+      setError(err.message || "Login failed");
+    }
+  } finally {
+    setLoading(false);
+  }
+};
+
 
   return (
     <div className="relative flex justify-center items-center min-h-screen bg-gradient-to-br from-[#0f0f0f] via-[#1a1a1a] to-[#2a2a2a] overflow-hidden">

@@ -20,6 +20,8 @@ const Sidebar = () => {
     { name: 'Reports', path: '/reports', icon: '📊' },
     { name: 'Team', path: '/team', icon: '👥' },
     { name: 'Calendar', path: '/calendar', icon: '📅' },
+    { name: "Apply Request", path: "/request", icon: "📄" },
+
     // { name: 'Messages', path: '/messages', icon: '💬' },
     { name: 'Analytics', path: '/analytics', icon: '📈' },
     // { name: 'Settings', path: '/settings', icon: '⚙️' },

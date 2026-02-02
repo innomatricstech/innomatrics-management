@@ -2,6 +2,12 @@ import { useState, useRef } from "react";
 import html2canvas from "html2canvas";
 import { jsPDF } from "jspdf";
 import Logo from "../assets/Logo 1.png"
+import { collection, query, where, getDocs } from "firebase/firestore";
+import { db } from "../firebase";
+
+import { doc, updateDoc } from "firebase/firestore";
+
+
 
 const Payslip = () => {
   const payslipRef = useRef(null);
@@ -46,6 +52,57 @@ const [data, setData] = useState({
     lossOfPayAmount: ""
   }
 });
+
+const fetchEmployeeDetails = async (employeeId) => {
+  if (!employeeId) return;
+
+  try {
+    const q = query(
+      collection(db, "team"),
+      where("employeeId", "==", employeeId.trim())
+    );
+
+    const snapshot = await getDocs(q);
+
+    if (snapshot.empty) {
+      alert("Employee not found");
+      return;
+    }
+
+    const employee = snapshot.docs[0].data();
+
+    setData((prev) => ({
+      ...prev,
+      employeeNumber: employee.employeeId,
+           dateJoined : employee.joiningDate,
+      employeeName: employee.name || "",
+      department: employee.department || "",
+      designation: employee.designation || "",
+      paymentMode: "Bank Transfer",
+                
+      bankName: employee.bankName || "",
+      ifsc: employee.bankIFSC || "",
+      accountNo: employee.bankAccount || "",
+
+      earnings: {
+        ...prev.earnings,
+        basic: employee.basicSalary || "",
+        da: employee.da || "",
+        ta: employee.ta || ""
+      },
+
+      deductions: {
+        ...prev.deductions,
+        professionalTax: employee.professionalTax || ""
+      }
+    }));
+  } catch (err) {
+    console.error(err);
+    alert("Error fetching employee");
+  }
+};
+
+
 
 
   const handleChange = (path, value) => {
@@ -286,11 +343,19 @@ const lossOfPayAmount = () => {
                 <td className="border border-gray-300 px-4 py-2">
                   {isEditing ? (
                     <input
-                      type="text"
-                      value={data.employeeNumber}
-                      onChange={(e) => handleChange("employeeNumber", e.target.value)}
-                      className="w-full px-2 py-1 border border-gray-300 rounded"
-                    />
+  type="text"
+  value={data.employeeNumber}
+  onChange={(e) => handleChange("employeeNumber", e.target.value)}
+  onBlur={() => fetchEmployeeDetails(data.employeeNumber)}
+  onKeyDown={(e) => {
+    if (e.key === "Enter") {
+      fetchEmployeeDetails(data.employeeNumber);
+    }
+  }}
+  placeholder="EMP001"
+  className="w-full px-2 py-1 border border-gray-300 rounded"
+/>
+
                   ) : (
                     data.employeeNumber
                   )}
